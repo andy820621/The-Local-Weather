@@ -135,11 +135,16 @@
 		</section>
 
 		<div
-			class="flex items-center gap-2 py-12 text-white cursor-pointer duration-150 hover:text-red-500"
+			class="flex items-center gap-2 py-12 text-white cursor-pointer duration-150"
+			:class="{
+				'hover:text-red-500': route.query.id,
+				'hover:text-weather-secondary': !route.query.id,
+			}"
 			@click="removeCity"
 		>
-			<i class="fa-solid fa-trash"></i>
-			<p>Remove City</p>
+			<i class="fa-solid fa-trash" v-if="route.query.id"></i>
+			<i class="fa-solid fa-arrow-left" v-else></i>
+			<p>{{ route.query.id ? "Remove City" : "Back to List" }}</p>
 		</div>
 	</div>
 </template>
@@ -150,18 +155,14 @@ import { useRoute, useRouter } from "vue-router";
 import { inject } from "vue";
 
 const tempShowByFahrenheit = inject("tempShowByFahrenheit");
-// console.log(tempShowByFahrenheit);
 
 const route = useRoute();
 const API_KEY = import.meta.env.VITE_WEATHER_KEY;
 
 async function getWeatherData() {
 	try {
-		// const weatherData = await axios.get(
-		// 	`https://api.openweathermap.org/data/2.5/onecall?lat=${route.query.lat}&lon=${route.query.lng}&exclude={part}&appid=${API_KEY}&units=imperial`
-		// );
 		const weatherData = await axios.get(
-			`https://api.openweathermap.org/data/2.5/onecall?lat=${route.query.lat}&lon=${route.query.lng}&exclude={part}&appid=7efa332cf48aeb9d2d391a51027f1a71&units=imperial`
+			`https://api.openweathermap.org/data/2.5/onecall?lat=${route.query.lat}&lon=${route.query.lng}&exclude={part}&appid=${API_KEY}&units=imperial`
 		);
 
 		// calculate current date & time
@@ -189,11 +190,11 @@ const weatherData = await getWeatherData();
 
 const router = useRouter();
 function removeCity() {
-	const cities = JSON.parse(localStorage.getItem("savedCities"));
-
-	const updatedCities = cities.filter((city) => city.id !== route.query.id);
-
-	localStorage.setItem("savedCities", JSON.stringify(updatedCities));
+	if (route.query.id) {
+		const cities = JSON.parse(localStorage.getItem("savedCities"));
+		const updatedCities = cities.filter((city) => city.id !== route.query.id);
+		localStorage.setItem("savedCities", JSON.stringify(updatedCities));
+	}
 
 	router.push({
 		name: "home",

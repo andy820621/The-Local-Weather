@@ -3,7 +3,7 @@
 		<transition name="modal-outer">
 			<div
 				v-show="modalActive"
-				class="absolute w-full bg-black bg-opacity-30 h-screen top-0 left-0 flex justify-center px-8"
+				class="absolute w-full bg-black bg-opacity-30 min-h-screen top-0 left-0 flex justify-center px-8 backdrop-blur-[0.15rem]"
 				@click.self="$emit('close-modal')"
 			>
 				<transition name="modal-inner">

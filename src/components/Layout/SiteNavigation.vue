@@ -14,7 +14,11 @@
 				class="flex gap-3 flex-1 justify-end [&>*]:text-xl [&>*:hover]:text-weather-secondary [&>*]:duration-150 [&>*]:cursor-pointer [&>*:active]:translate-y-1"
 			>
 				<i class="fa-solid fa-circle-info" @click="toggleModal"></i>
-				<i class="fa-solid fa-plus" @click="addCity" v-if="route.query"></i>
+				<i
+					class="fa-solid fa-plus"
+					@click="addCity"
+					v-if="route.query && route.query.preview"
+				></i>
 				<button @click="changeTempDisplay">
 					<p
 						class="text-xl font-bold translate-y-[1px]"
@@ -56,6 +60,9 @@
 					</p>
 				</div>
 			</BaseModal>
+			<BaseModal :modal-active="alertExist" @close-modal="toggleExist">
+				<div class="text-black">This city is already on the list.</div>
+			</BaseModal>
 		</nav>
 	</header>
 </template>
@@ -76,17 +83,30 @@ const route = useRoute();
 const router = useRouter();
 
 const modalActive = ref(false);
+const alertExist = ref(false);
 
 function toggleModal() {
+	document.body.style.overflow = modalActive.value ? "initial" : "hidden";
 	modalActive.value = !modalActive.value;
+}
+function toggleExist() {
+	document.body.style.overflow = alertExist.value ? "initial" : "hidden";
+	alertExist.value = !alertExist.value;
 }
 
 const savedCities = ref([]);
 
 function addCity() {
-	console.log(route);
 	if (localStorage.getItem("savedCities")) {
 		savedCities.value = JSON.parse(localStorage.getItem("savedCities"));
+	}
+	if (savedCities.value.some((city) => city.city === route.params.city)) {
+		toggleExist();
+		let query = Object.assign({}, route.query);
+		delete query.preview;
+		router.replace({ query });
+
+		return;
 	}
 
 	const locationObj = {
