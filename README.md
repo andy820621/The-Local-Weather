@@ -1,14 +1,13 @@
-# wheater
+# The Local Weather
 
-This template should help get you started developing with Vue 3 in Vite.
+Use Vue3 & Tailwind to build this Website, and use Vite as build tool.
 
-## Recommended IDE Setup
+> See the [Website](https://the-local-weather.vercel.app/).
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## API
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- [Openweathermap](https://openweathermap.org/api): OpenWeatherMap is an online service, owned by OpenWeather Ltd, that provides global weather data via API, including current weather data, forecasts, nowcasts and historical weather data for any geographical location.
+- [Mapbox](https://www.mapbox.com/): Mapbox provides many tools to build maps into your website or web-based application. Mapbox GL JS and Mapbox. js are both JavaScript libraries you can use to display your Mapbox maps, add interactivity, and customize the map experience in your application.
 
 ## Project Setup
 
