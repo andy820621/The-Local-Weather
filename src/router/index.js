@@ -20,6 +20,10 @@ const router = createRouter({
 				title: "Weather",
 			},
 		},
+		{
+			path: "/:pathMatch(.*)*",
+			component: () => import("@/views/NotFound.vue"),
+		},
 	],
 });
 

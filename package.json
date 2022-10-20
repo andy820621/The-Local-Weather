@@ -1,5 +1,5 @@
 {
-	"name": "wheater",
+	"name": "the-local-wheater",
 	"version": "0.0.0",
 	"scripts": {
 		"dev": "vite --host",
